@@ -1,14 +1,19 @@
-<script lang="ts" setup></script>
+<script setup lang="ts"></script>
+
 <template>
-  <section class="grid" style="min-height: 100vh">
-    <div>
-      <slot />
-    </div>
-  </section>
+  <title>jiva</title>
+  <div class="index-vue">
+    <Board />
+  </div>
 </template>
+
 <style scoped>
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 6fr;
+.index-vue {  
+  height: 100vh;
+  width: 100%;
+  background: #131b2b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

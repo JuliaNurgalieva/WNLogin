@@ -7,42 +7,42 @@ export interface IMenuItem {
 export const MENU_DATA: IMenuItem[] = [
     {
         icon: 'radix-icons:dashboard',
-        name: "Home",
+        name: "Projects",
         url: "/"
     },
     {
 		name: 'Products',
 		icon: 'ep:goods',
-		url: '/products',
+		url: '/',
 	},
 	{
 		name: 'Payments',
 		icon: 'ph:contactless-payment',
-		url: '/payments',
+		url: '/',
 	},
 	{
 		name: 'Orders',
 		icon: 'fluent:receipt-28-regular',
-		url: '/orders',
+		url: '/',
 	},
 	{
 		name: 'Customers',
 		icon: 'mingcute:group-line',
-		url: '/customers',
+		url: '/',
 	},
 	{
 		name: 'Feedback',
 		icon: 'fluent:person-feedback-48-regular',
-		url: '/feedback',
+		url: '/',
 	},
 	{
 		name: 'Settings',
 		icon: 'radix-icons:gear',
-		url: '/settings',
+		url: '/',
 	},
 	{
 		name: 'Help center',
 		icon: 'radix-icons:question-mark',
-		url: '/help',
+		url: '/',
 	},
 ]

@@ -1,16 +1,26 @@
-<script setup lang="js">
+<script lang="ts" setup>
 import { MENU_DATA } from './menu.data'
 </script>
-<template>
-  <div>
-    <NuxtLink
-      class="flex items-center py-1 px-3 rounded-lg w-full hover:bg-gray-700 hover:shadow transition-all mb-2"
-      v-for="item in MENU_DATA"
-      :key="item.name"
-      :to="item.url"
-    >
-      <Icon :name="item.icon" class="mr-3" />
+<template>  
+    <NuxtLink class="menu" v-for="item in MENU_DATA" :key="item.name" :to="item.url">
+      <Icon :name="item.icon" class="icon"/>
       <span>{{ item.name }}</span>
-    </NuxtLink>
-  </div>
+    </NuxtLink> 
 </template>
+<style scoped>
+.icon {
+  margin-right: 20px;
+  font-size: 30px;
+  color:aliceblue;
+}
+.menu {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  font-family: sans-serif;
+  font-size: 18px;
+  color:aliceblue;
+  text-decoration: none; 
+}
+
+</style>
