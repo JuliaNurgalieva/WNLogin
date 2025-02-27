@@ -1,19 +1,18 @@
 <script setup lang="ts"></script>
 
 <template>
-  <title>jiva</title>
-  <div class="index-vue">
+  <title>jiva</title> 
+  <div class="header">          
+  </div> 
+  <div>
     <Board />
   </div>
 </template>
 
 <style scoped>
-.index-vue {  
-  height: 100vh;
-  width: 100%;
-  background: #131b2b;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.header {
+  height: 80px;
+  margin-bottom: 20px;
+  background-color: #1c2537;
 }
 </style>

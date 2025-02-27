@@ -2,9 +2,9 @@
 <template>
   <section class="grid">
     <layoutSidebar />
-    <div>
-
-    </div>
+      <div>
+        <NuxtPage />
+      </div>
   </section>
 </template>
 <style scoped>

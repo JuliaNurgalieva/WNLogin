@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({
+  layout: false,
+});
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 
@@ -25,12 +28,7 @@ const register = () => {
       <h2>Login</h2>
       <form>
         <input type="email" v-model="email" placeholder="Email" required />
-        <input
-          type="password"
-          v-model="password"
-          placeholder="Password"
-          required
-        />
+        <input type="password" v-model="password" placeholder="Password" required />
         <input type="text" v-model="name" placeholder="Name" required />
         <div class="buttons">
           <button type="button" @click="Click">Login</button>

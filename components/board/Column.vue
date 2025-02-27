@@ -1,35 +1,40 @@
+<script setup lang="ts">
+import TaskCard from './TaskCard.vue';
+defineProps<{ title: string; tasks: { id: number; title: string; description: string }[] }>();
+</script>
+
 <template>
+  
     <div class="column">
-      <h3>{{ title }}</h3>
+      <div class="column-header">
+        <h3>{{ title }}</h3>
+      </div>
+      
       <div class="task-list">
         <TaskCard v-for="task in tasks" :key="task.id" :task="task" />
       </div>
     </div>
   </template>
   
-  <script setup lang="ts">
-  import TaskCard from './TaskCard.vue';
-  
-  defineProps<{ title: string; tasks: { id: number; title: string; description: string }[] }>();
-  </script>
+ 
   
   <style scoped>
-  .column {
-    width: 250px;
-    background: #1c2537;
+  .column {        
     border-radius: 8px;
-    padding: 10px;
+    background: #1c2537; 
+    flex: 1;
+    max-width: 25%;
+    margin-inline: 10px;   
   }
   
-  h3 {
-    text-align: center;
+  h3 {    
     color: white;
-    margin-bottom: 10px;
-  }
-  
+    padding-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;   
+  }  
   .task-list {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: column;  
   }
   </style>
