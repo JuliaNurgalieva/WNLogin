@@ -11,7 +11,7 @@ import { MENU_DATA } from './menu.data'
 .icon {
   margin-right: 20px;
   font-size: 30px;
-  color:aliceblue;
+  color:#f0f8ff;
 }
 .menu {
   display: flex;
@@ -19,8 +19,15 @@ import { MENU_DATA } from './menu.data'
   margin-bottom: 20px;
   font-family: sans-serif;
   font-size: 18px;
-  color:aliceblue;
+  color:#f0f8ff;
   text-decoration: none; 
+  cursor: pointer;
+  
 }
-
+ .menu:hover {  
+  color: #f9a0f9;
+}
+.menu:hover .icon{  
+  color: #f9a0f9;
+}
 </style>

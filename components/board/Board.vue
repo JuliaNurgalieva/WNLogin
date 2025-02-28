@@ -13,13 +13,13 @@ const columns = [
       <Column v-for="column in columns" :key="column.id" :title="column.title" :tasks="column.tasks" />
     </div>
   </template>  
- 
   
   <style scoped>
   .board {
     display: flex;
-    justify-content: space-between;
-    
+    justify-content: space-evenly; 
+    gap: 20px;  
+    padding-inline: 20px; 
   }
   
   </style>

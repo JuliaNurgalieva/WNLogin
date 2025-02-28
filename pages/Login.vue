@@ -46,11 +46,11 @@ const register = () => {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #0a0f1c;
+  background-color: #21132bde;
 }
 
 .login-box {
-  background-color: #131b2b;
+  background-color: #382239a5;
   padding: 20px;
   border-radius: 8px;
   text-align: center;
@@ -58,7 +58,7 @@ const register = () => {
 }
 
 h2 {
-  color: white;
+  color: #f0f8ff;
   margin-bottom: 20px;
 }
 
@@ -69,8 +69,8 @@ input {
   margin-bottom: 10px;
   border: none;
   border-radius: 4px;
-  background-color: #1c2537;
-  color: white;
+  background-color: #21132bde;
+  color: #f0f8ff;
   box-sizing: border-box;
 }
 
@@ -80,14 +80,14 @@ button {
   width: 45%;
   border: 2px solid transparent;
   border-radius: 4px;
-  background-color: #1c3a5e;
-  color: white;
+  background-color: #21132bde;
+  color: #f0f8ff;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
 }
 
 button:hover {
-  background-color: #25507b;
-  color: rgba(0, 255, 255, 0.553);
+  border-color: #f76df78d;
+  color: #f76df78d;
 }
 </style>

@@ -5,33 +5,27 @@ defineProps<{ title: string; tasks: { id: number; title: string; description: st
 
 <template>
   
-    <div class="column">
-      <div class="column-header">
-        <h3>{{ title }}</h3>
-      </div>
-      
-      <div class="task-list">
-        <TaskCard v-for="task in tasks" :key="task.id" :task="task" />
-      </div>
+    <div class="column">      
+        <h4>{{ title }}</h4>
+          
     </div>
-  </template>
-  
- 
-  
+  </template>  
   <style scoped>
   .column {        
-    border-radius: 8px;
-    background: #1c2537; 
+    border-radius: 8px;     
     flex: 1;
-    max-width: 25%;
-    margin-inline: 10px;   
-  }
-  
-  h3 {    
-    color: white;
-    padding-left: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;   
+    max-width: 25%;   
+    min-height: 20vh;        
+      
+  }  
+  h4 {    
+    color: #f0f8ff;
+    padding: 10px;        
+    background: #382239a5;  
+    border-radius: 8px;
+    margin: 0;
+    border: 0.1px solid transparent;
+    border-color: #f9a0f955;
   }  
   .task-list {
     display: flex;

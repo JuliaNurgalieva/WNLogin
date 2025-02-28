@@ -11,7 +11,7 @@
 .grid {
   display: grid;
   grid-template-columns: 1fr 5fr;
-  background: #131b2b;
+  background: #21132bde;
   min-height: 100vh;
 }
 </style>

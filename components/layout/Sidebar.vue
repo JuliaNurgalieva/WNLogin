@@ -12,20 +12,18 @@ import { MENU_DATA } from "./menu.data";
 <style scoped>
 .sidebar {
   width: 100%;
-  background-color: #1c2537;
+  background-color: #382239a5;
   padding: 20px;
   height: 100vh;
   text-align: center;
   position: relative;
   box-sizing: border-box;
+  
 }
 .logo {
   width: 80px;
   margin-bottom: 40px;
 }
-.project {
-  color: #fff;
-  font-family: sans-serif;
-  margin-bottom: 20px;
-}
+
+
 </style>
