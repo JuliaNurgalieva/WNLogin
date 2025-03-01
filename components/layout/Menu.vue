@@ -1,11 +1,21 @@
 <script lang="ts" setup>
 import { MENU_DATA } from './menu.data'
+import PopupProject from '../PopupProject.vue';
+const isPopupProject = ref(false)
+const openPopupProject = (item: { name: string }) => {
+  console.log(item.name);
+  if (item.name === 'Projects') {
+    isPopupProject.value = !isPopupProject.value
+    console.log(isPopupProject.value);
+  }
+}
 </script>
 <template>  
-    <NuxtLink class="menu" v-for="item in MENU_DATA" :key="item.name" :to="item.url">
+    <NuxtLink class="menu" v-for="item in MENU_DATA" :key="item.name" :to="item.url" @click.prevent="openPopupProject(item)">
       <Icon :name="item.icon" class="icon"/>
       <span>{{ item.name }}</span>
-    </NuxtLink> 
+    </NuxtLink>    
+      <PopupProject v-if="isPopupProject" :isVisible ="isPopupProject" @close="isPopupProject = false"/>         
 </template>
 <style scoped>
 .icon {

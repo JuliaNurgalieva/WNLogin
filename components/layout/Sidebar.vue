@@ -17,13 +17,10 @@ import { MENU_DATA } from "./menu.data";
   height: 100vh;
   text-align: center;
   position: relative;
-  box-sizing: border-box;
-  
+  box-sizing: border-box;  
 }
 .logo {
   width: 80px;
   margin-bottom: 40px;
 }
-
-
 </style>

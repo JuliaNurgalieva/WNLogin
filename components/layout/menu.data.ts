@@ -8,7 +8,7 @@ export const MENU_DATA: IMenuItem[] = [
     {
         icon: 'radix-icons:dashboard',
         name: "Projects",
-        url: "/"
+        url: "",
     },
     {
 		name: 'Products',
