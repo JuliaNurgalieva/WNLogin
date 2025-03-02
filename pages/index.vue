@@ -42,7 +42,7 @@ button {
 }
 
 button:hover {
-  border-color: #f9a0f9;
-  color: #f9a0f9;
+  border-color: #f9a0f9c4;
+  color: #f9a0f9c4;
 }
 </style>

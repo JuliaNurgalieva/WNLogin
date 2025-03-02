@@ -1,5 +1,4 @@
-
-<script setup>
+<script setup lang="ts">
 const projects = ref(['Board 1', 'Board 2']) // Пока просто тестовые данные 
 import {defineProps} from "vue";
 const props = defineProps({
@@ -7,26 +6,32 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-})
+});
+import { defineEmits } from "vue";
+const emit = defineEmits(['update:isVisible']);
+const closePopup = () => {
+  emit('update:isVisible', false);
+}
 </script>
 
 <template>
-    <div class="popup" v-if="isVisible" @click.self="$emit('close')">
+    <div class="popup" v-if="isVisible">
       <div class="popup-block">
       <p class="new-project">Create new project +</p>
       <ul class="project-list">
         <li v-for="project in projects" :key="project">{{ project }}</li>
       </ul>
+      <Icon name="heroicons-solid:x" class="close-icon" @click="closePopup"/>
     </div>
     </div>
   </template>
   
-  <style scoped>
+  <style scoped>  
   .popup {
     position: absolute;
     top: 135px;
     left: 60px;
-    width: 200px;
+    width: 260px;
     background: #48324D;
     border-radius: 8px;
     padding: 10px;   
@@ -38,32 +43,39 @@ const props = defineProps({
     border-radius: 6px;
     border: 0.1px solid transparent; 
     border-color: #f9a0f955;   
-    max-height: 200px;
-   
-  }
-  
+    max-height: 200px;   
+  }  
   .new-project {
     font-weight: bold;
     cursor: pointer;
-  }
-  
+    margin: 0;
+    padding: 8px;
+  }  
   .project-list {
     list-style: none;
     padding: 0;
     margin: 0;
-  }
-  
+  }  
   .project-list li {
     padding: 8px;
     cursor: pointer;
   }
-  
+  .close-icon {
+    cursor: pointer;
+    color: #f0f8ff;
+    transition: color 0.2s;
+    margin-left: 12rem;
+  }
+  .close-icon:hover {
+    color: #f9a0f9c4;
+  }  
   .project-list li:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #f0f8ff20;
     border-radius: 4px;
   }
   .new-project:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #f0f8ff20;
     border-radius: 4px;
   }
+
   </style>

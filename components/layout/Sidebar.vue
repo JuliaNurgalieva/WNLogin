@@ -2,10 +2,8 @@
 import { MENU_DATA } from "./menu.data";
 </script>
 <template>
-  <aside class="sidebar">
-    <NuxtLink to="/login">
-      <NuxtImg src="/Jiva.svg" class="logo" />
-    </NuxtLink>
+  <aside class="sidebar">    
+   <NuxtImg src="/Jiva.svg" class="logo" />   
     <LayoutMenu />
   </aside>
 </template>
@@ -23,4 +21,5 @@ import { MENU_DATA } from "./menu.data";
   width: 80px;
   margin-bottom: 40px;
 }
+
 </style>
