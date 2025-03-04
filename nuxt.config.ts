@@ -5,6 +5,6 @@ export default defineNuxtConfig({
   css: ["~/assets/global.css"],
   modules: [
     "@nuxt/image",       
-    "@nuxt/icon",    
+    "@nuxt/icon",     
   ],
 });

@@ -1,14 +1,17 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+import DrawerTask from "@/components/DrawerTask.vue";
+const isDrawerOpen = ref(false);
+</script>
 
 <template>
   <title>jiva</title> 
   <div class="header"> 
-    <h2>Project Name</h2>
-    <button>Create</button>             
-  </div> 
-  <div>
-    <Board />
-  </div>
+    <h2>Project Name</h2>     
+    <button @click="isDrawerOpen = true">Create</button>   
+  </div>     
+  <Board />  
+  <DrawerTask v-model:isVisible="isDrawerOpen" />
 </template>
 
 <style scoped>

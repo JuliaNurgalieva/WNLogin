@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TaskCard from './TaskCard.vue';
+
 defineProps<{ title: string; tasks: { id: number; title: string; description: string }[] }>();
 </script>
 

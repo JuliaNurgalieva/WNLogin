@@ -37,6 +37,7 @@ const closePopup = () => {
     padding: 10px;   
     color: #f0f8ff;
     z-index: 9999;
+    box-shadow: -2px 0 10px #00000033;
   }
   .popup-block {
     padding: 10px;    
