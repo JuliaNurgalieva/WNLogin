@@ -17,7 +17,7 @@ import { MENU_DATA } from "./menu.data";
   position: relative;
   box-sizing: border-box;  
 }
-.logo {
+.logo {   
   width: 80px;
   margin-bottom: 40px;
 }

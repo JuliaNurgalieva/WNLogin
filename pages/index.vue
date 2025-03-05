@@ -7,7 +7,7 @@ const isDrawerOpen = ref(false);
 <template>
   <title>jiva</title> 
   <div class="header"> 
-    <h2>Project Name</h2>     
+    <h2>{{}}</h2>     
     <button @click="isDrawerOpen = true">Create</button>   
   </div>     
   <Board />  
