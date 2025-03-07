@@ -12,6 +12,7 @@ const columns = [
     <div class="board">
       <Column v-for="column in columns" :key="column.id" :title="column.title" :tasks="column.tasks" />
     </div>
+    
   </template>  
   
   <style scoped>

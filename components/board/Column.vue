@@ -7,7 +7,8 @@ defineProps<{ title: string; tasks: { id: number; title: string; description: st
   
     <div class="column">      
         <h4>{{ title }}</h4>
-          
+        <Task /> 
+        
     </div>
   </template>  
   <style scoped>

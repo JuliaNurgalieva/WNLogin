@@ -1,29 +1,29 @@
 <script lang="js" setup>
 import { defineProps, defineEmits } from "vue";
-import {ref, onMounted, nextTick} from "vue";
+import { ref, onMounted, nextTick } from "vue";
+
 defineProps({ isVisible: Boolean });
 const emit = defineEmits(["update:isVisible"]);
 const closeDrawer = () => {
   emit("update:isVisible", false);
 }
 const textareaRef = ref(null);
-
 const autoResize = () => {
   const textarea = textareaRef.value;
   if (!textareaRef.value) return;
   textarea.style.height = "auto";
   textarea.style.height = textareaRef.value.scrollHeight + "px";
 };
-
 onMounted(async () => {
   await nextTick();  
   autoResize(); 
 });
+
 </script>
 
 <template>
   <transition name="slide">
-    <aside class="drawer" v-if="isVisible">
+    <aside class="drawer" v-if="isVisible " ref="drawerRef">
       <p>Create new task</p>
         <div class="new-task">
           <input id="theme" placeholder="Theme:" type="text" class="input" maxlength="36"/>
@@ -48,7 +48,7 @@ onMounted(async () => {
 
 button {
   border: 1px solid transparent;
-  border-radius: 6px;  
+  border-radius: 8px;  
   color: #f0f8ff;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
@@ -58,6 +58,7 @@ button {
   justify-content: end;
   margin-top:0.5rem;
   margin-left: auto;
+  font-family: Lato-Regular;  
 }
 .drawer {  
   position: fixed;
@@ -78,7 +79,7 @@ p {
   color: #f0f8ff;
   margin-block: 2rem;
   padding-left: 2rem;
-  font-family: Lato-LightItalic;
+  font-family: Lato-Italic;
   font-size: 1.5rem;
 }
 .input {

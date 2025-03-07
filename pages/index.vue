@@ -30,10 +30,10 @@ h2 {
 }
 button {  
   margin: 0px;
-  width: 80px;
-  height: 34px;  
+  width: 72px;
+  height: 30px;  
   border: 1px solid transparent;
-  border-radius: 6px;  
+  border-radius: 10px;  
   color: #f0f8ff;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
@@ -41,6 +41,7 @@ button {
   font-size: 20px;
   border-color: #f0f8ff;
   padding: 0;
+  font-family: Lato-Regular;
   
 }
 
