@@ -1519,6 +1519,11 @@ anymatch@^3.1.3, anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
+appwrite@^17.0.0:
+  version "17.0.0"
+  resolved "https://registry.npmjs.org/appwrite/-/appwrite-17.0.0.tgz"
+  integrity sha512-R5+jMh6dVsKC5BdcO9G3wQPxqlU048zxj/Hahq2SU86XIxb0jWThQqS7MtyLUg7tz27SrwO2JvpwUrT9SOStDA==
+
 archiver-utils@^5.0.0, archiver-utils@^5.0.2:
   version "5.0.2"
   resolved "https://registry.npmjs.org/archiver-utils/-/archiver-utils-5.0.2.tgz"

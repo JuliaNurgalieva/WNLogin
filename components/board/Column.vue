@@ -1,14 +1,9 @@
 <script setup lang="ts">
-
 defineProps<{ title: string; tasks: { id: number; title: string; description: string }[] }>();
 </script>
-
-<template>
-  
+<template>  
     <div class="column">      
-        <h4>{{ title }}</h4>
-        <Task /> 
-        
+        <h4>{{ title }}</h4>                
     </div>
   </template>  
   <style scoped>
@@ -16,8 +11,7 @@ defineProps<{ title: string; tasks: { id: number; title: string; description: st
     border-radius: 8px;     
     flex: 1;
     max-width: 25%;   
-    min-height: 20vh;        
-      
+    min-height: 20vh;     
   }  
   h4 {    
     color: #f0f8ff;
@@ -27,9 +21,5 @@ defineProps<{ title: string; tasks: { id: number; title: string; description: st
     margin: 0;
     border: 0.1px solid transparent;
     border-color: #f9a0f955;
-  }  
-  .task-list {
-    display: flex;
-    flex-direction: column;  
-  }
+  }    
   </style>

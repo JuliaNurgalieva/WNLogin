@@ -1,0 +1,5 @@
+export const APP_WRITE_ID = '67d047fd003323addcf6'
+export const DB_ID = '67d6b520000301e44547'
+export const COLLECTION_TASKS = 'tasks'
+export const COLLECTION_USERS = 'users'
+export const COLLECTION_COMMENTS = 'comments'

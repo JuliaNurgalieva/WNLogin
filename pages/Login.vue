@@ -1,28 +1,30 @@
 <script setup lang="ts">
+import { account } from "@/utils/appwrite";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
 definePageMeta({
   layout: false,
 });
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-
 const email = ref("");
 const password = ref("");
 const name = ref("");
 const router = useRouter();
-const Click = () => {
-  router.push("/");
-};
 
-const login = () => {
-  console.log("Logging in with:", email.value, password.value, name.value);
+const login = async () => {
+  const session = await account.getSession('current');
+  if (session) {
+    await account.deleteSession('current');
+  }
+  await account.createEmailPasswordSession(email.value, password.value);  
+  await router.push("/");
 };
-
-const register = () => {
-  console.log("Registering with:", email.value, password.value, name.value);
+const register = async () => { 
+  await account.create("unique()", email.value, password.value, name.value);
+  await login(); 
 };
 </script>
-
 <template>
+  <title>jiva/login</title>
   <div class="container">
     <div class="login-box">
       <h2>Login</h2>
@@ -31,8 +33,8 @@ const register = () => {
         <input type="password" v-model="password" placeholder="Password" required />
         <input type="text" v-model="name" placeholder="Name" required />
         <div class="buttons">
-          <button type="button" @click="Click">Login</button>
-          <button type="button" @click="Click">Register</button>
+          <button type="button" @click="login">Login</button>
+          <button type="button" @click="register">Register</button>
         </div>
       </form>
     </div>
