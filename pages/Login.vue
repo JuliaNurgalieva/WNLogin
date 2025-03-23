@@ -2,6 +2,7 @@
 import { account } from "@/utils/appwrite";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import { useAuthStore } from "@/stores/auth.store";
 definePageMeta({
   layout: false,
 });
@@ -9,15 +10,23 @@ const email = ref("");
 const password = ref("");
 const name = ref("");
 const router = useRouter();
-
-const login = async () => {
-  const session = await account.getSession('current');
-  if (session) {
-    await account.deleteSession('current');
-  }
+const authStore = useAuthStore();
+const login = async () => {   
   await account.createEmailPasswordSession(email.value, password.value);  
-  await router.push("/");
+  const response = await account.get()
+  if (response) {
+    authStore.set({
+      email: response.email,
+      name: response.name,
+      status: response.status,
+  }) 
+  } 
+  email.value = "";
+password.value = "";
+name.value = "";
+await router.push("/");
 };
+
 const register = async () => { 
   await account.create("unique()", email.value, password.value, name.value);
   await login(); 

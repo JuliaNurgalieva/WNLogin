@@ -1,9 +1,23 @@
 <script setup lang="ts">
 import { MENU_DATA } from "./menu.data";
+import { account } from '@/utils/appwrite'
+import { useAuthStore } from '@/stores/auth.store'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const authStore = useAuthStore()
+
+const logout = async () => {    
+    await account.deleteSession('current')   
+    authStore.clear()    
+    router.push('/login')  
+}
 </script>
 <template>
-  <aside class="sidebar">    
-   <NuxtImg src="/Jiva.svg" class="logo" />   
+  <aside class="sidebar"> 
+    <div class = "logo-container">  
+    <NuxtImg src="/Jiva.svg" class="logo" /> 
+    <Icon name="ic:baseline-arrow-forward-ios" class="close-jiva" @click="logout" title="выход"/>
+  </div> 
     <LayoutMenu />
   </aside>
 </template>
@@ -19,7 +33,21 @@ import { MENU_DATA } from "./menu.data";
 }
 .logo {   
   width: 80px;
+  margin-inline: auto;
+}
+.logo-container {
+  display: flex;
+  align-items: center;  
   margin-bottom: 40px;
+  
+}
+.close-jiva {
+  cursor: pointer;
+  color: #f0f8ff;
+  transition: color 0.2s;
+}
+.close-jiva:hover {
+  color: #f9a0f9c4;
 }
 
 </style>

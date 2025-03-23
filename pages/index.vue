@@ -3,7 +3,6 @@ import { ref } from "vue";
 import DrawerTask from "@/components/DrawerTask.vue";
 const isDrawerOpen = ref(false);
 </script>
-
 <template>
   <title>jiva</title> 
   <div class="header"> 
@@ -13,7 +12,6 @@ const isDrawerOpen = ref(false);
   <Board />  
   <DrawerTask v-model:isVisible="isDrawerOpen" />
 </template>
-
 <style scoped>
 .header {
   height: 80px;
