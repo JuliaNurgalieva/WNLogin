@@ -1,22 +1,16 @@
-<script lang="js" setup >
-import { ref, nextTick } from "vue";
+<script lang="ts" setup >
+import { ref } from "vue";
+import { useBoardQuery } from '@/components/board/useBoardQuery'
+import type { ITask, IColumn } from "@/components/board/board.types";
 
 const isEditing = ref(false);
-
 const toggleEdit = () => {
   isEditing.value = !isEditing.value;
 };
 
 </script>
 <template>
-    <div class="task" ref="taskRef">
-     <input class="theme" type="text" ref="themeRef" :readonly="!isEditing" @input="autoResize(themeRef)"></input>    
-     <textarea class="comments" type="text" ref="commentsRef" :readonly="!isEditing" @input="autoResize(commentsRef)"></textarea>
-    <div class="task-redact">
-     <input class="name" type="text" :readonly="!isEditing"></input>
-     <Icon name="heroicons-solid:pencil" class="redact" :class="{ 'active-icon': isEditing}" @click="toggleEdit"/>
-    </div>
-  </div>
+  
 </template>
 <style scoped>
 .task {  
@@ -33,6 +27,9 @@ const toggleEdit = () => {
   border: 1px solid #f9a0f955;  
   margin-block: 1rem;
   flex: 1;  
+}
+.task:hover {
+  border: 1px solid #f9a0f9c4;
 }
 .task-redact {
     display: flex;  

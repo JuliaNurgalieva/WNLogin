@@ -22,7 +22,7 @@ export const MENU_DATA: IMenuItem[] = [
 	},
 	{
 		name: 'Orders',
-		icon: 'fluent:receipt-28-regular',
+		icon: 'fluent:channel-48-regular',
 		url: '/',
 	},
 	{
@@ -32,7 +32,7 @@ export const MENU_DATA: IMenuItem[] = [
 	},
 	{
 		name: 'Feedback',
-		icon: 'fluent:person-feedback-48-regular',
+		icon: 'fluent:person-mail-48-regular',
 		url: '/',
 	},
 	{

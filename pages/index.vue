@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import DrawerTask from "@/components/DrawerTask.vue";
+import DrawerTask from "@/components/DrawerTask.vue"; 
 const isDrawerOpen = ref(false);
 </script>
 <template>
   <title>jiva</title> 
   <div class="header"> 
-    <h2>{{}}</h2>     
+    <h2>{{ }}</h2>     
     <button @click="isDrawerOpen = true">Create</button>   
   </div>     
   <Board />  

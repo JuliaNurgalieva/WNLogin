@@ -1,13 +1,15 @@
 <script setup lang="ts">
-const projects = ref(['Board 1', 'Board 2']) // Пока просто тестовые данные 
-import {defineProps} from "vue";
+import { defineProps } from "vue";
+import { defineEmits } from "vue";
+import { ref } from "vue";
+const projects = ref(['Board 1', 'Board 2']) // тестовые данные 
 const props = defineProps({
   isVisible: {
     type: Boolean,
     default: false,
   },
 });
-import { defineEmits } from "vue";
+
 const emit = defineEmits(['update:isVisible']);
 const closePopup = () => {
   emit('update:isVisible', false);
@@ -17,7 +19,7 @@ const closePopup = () => {
     <div class="popup" v-if="isVisible">
       <div class="popup-block">
       <div class="Create-new-board">
-        <input id="new-board" placeholder="Create new board:" type="text" class="input" maxlength="36" />
+        <input  id="new-kanban" placeholder="Create new kanban:" type="text" class="input" maxlength="36" />
         <Icon name="heroicons-solid:check" class="check" @click=""/> 
       </div>
       <ul class="project-list">
