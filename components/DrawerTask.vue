@@ -1,18 +1,63 @@
-<script lang="js" setup>
+<script lang="ts" setup>
 import { defineProps, defineEmits } from "vue";
 import { ref, onMounted, nextTick } from "vue";
+import { useMutation } from '@tanstack/vue-query'
+import { COLLECTION_TASKS, DB_ID } from '~/app.constants'
+import { type IColumn, type ITask } from "~/components/board/board.types"
+import { useForm } from "vee-validate";
 
-defineProps({ isVisible: Boolean });
+interface ITaskFormState extends Pick<ITask, 'theme'> {
+	user: {		
+		name: string
+  }
+  comment: {
+    content: string
+  }
+	status: string  
+}
+const props = defineProps({
+  isVisible: Boolean,
+  status: {
+		type: String,
+		default: '',
+	},
+	refetch: {
+		type: Function,
+	},
+});
+
+const { handleSubmit, defineField, handleReset } = useForm<ITaskFormState>({
+	initialValues: {
+		status: 'todo',
+	},
+})
+
+const [theme, themeAttrs] = defineField('theme')
+const [comments, commentsAttrs] = defineField('comment.content')
+const [name, nameAttrs] = defineField('user.name')
+
+const { mutate, isPending } = useMutation({
+	mutationKey: ['create a new deal'],
+	mutationFn: (data: ITaskFormState) =>
+    DB.createDocument(DB_ID, COLLECTION_TASKS, ID.unique(), data),
+	onSuccess() {
+		props.refetch && props.refetch()
+		handleReset()
+	},
+})
+const onSubmit = handleSubmit((values: ITaskFormState) => {
+	mutate(values)
+})
 const emit = defineEmits(["update:isVisible"]);
 const closeDrawer = () => {
   emit("update:isVisible", false);
 }
-const textareaRef = ref(null);
+const textareaRef = ref<HTMLDivElement | null>(null);
 const autoResize = () => {
   const textarea = textareaRef.value;
-  if (!textareaRef.value) return;
+  if (!textarea) return;
   textarea.style.height = "auto";
-  textarea.style.height = textareaRef.value.scrollHeight + "px";
+  textarea.style.height = `${textarea.scrollHeight}px`;
 };
 onMounted(async () => {
   await nextTick();  
@@ -25,20 +70,33 @@ onMounted(async () => {
   <transition name="slide">
     <aside class="drawer" v-if="isVisible " ref="drawerRef">
       <p>Create new task</p>
-        <div class="new-task">
-          <input id="theme" placeholder="Theme:" type="text" class="input" maxlength="36"/>
-          <input id="name" placeholder="Name:" type="text" class="input" maxlength="20"/>
-          <textarea
-            maxlength="650"
-            id="comments"
+        <form class="form" @submit="onSubmit">
+          <input 
+          placeholder="Theme:" 
+          v-model="theme"
+			    v-bind="themeAttrs"
+			    type="text"
+			    class="input" 
+          maxlength="36"/>
+          <input 
+          placeholder="Name:" 
+          v-model="name"
+			    v-bind="nameAttrs"
+          type="text" 
+          class="input" 
+          maxlength="20"/>
+          <input
+            maxlength="400"
+            v-model="comments"
+			      v-bind="commentsAttrs"
             placeholder="Comments:"
             @input="autoResize"        
             class="input"
             type="text"
             ref="textareaRef"
-          ></textarea>
-          <button @click="">Create</button>
-        </div>
+          ></input>
+          <button class="btn" :disabled="isPending">{{ isPending ? 'loading' : 'create' }}</button>
+        </form>
       <Icon name="heroicons-solid:x" class="close-icon" @click="closeDrawer" />
     </aside>
   </transition>
@@ -99,7 +157,7 @@ p {
   box-shadow: -2px 0 10px #00000033;
 }
 
-.new-task { 
+.form { 
   display: flex;
   flex-direction: column; 
   margin: 1rem;

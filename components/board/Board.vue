@@ -7,30 +7,36 @@ import UiTaskTheme from "~/components/ui/task/TaskTheme.vue";
 import UiTask from "~/components/ui/task/TaskTheme.vue";
 import UiTaskName from "~/components/ui/task/TaskTheme.vue";
 import UiTaskComments from "~/components/ui/task/TaskTheme.vue";
-import { type IUser } from "~/types/task.types";
-import {type IComment } from "~/types/task.types";
 import dayjs from "dayjs";
 import { BoardCreateTask } from "#components";
 const dragTask = ref<ITask | null>(null);
 const sourceColumn = ref<IColumn | null>(null);
-const { data, refetch } = useBoardQuery();
-</script>
+const { data, refetch } = useBoardQuery();</script>
 <template>
   <div class="grid">
     <div v-for="column in data" :key="column.id">
       <div class="title">
-        <span class="text">{{ column.name }}</span>
+        <span class="text">{{ column.name }}</span>       
       </div>
       <div class="board">
-        <BoardCreateTask :refetch="refetch" :status="column.id" />
+        <DrawerTask :refetch="refetch" :status="column.id" />
         <UiTask
           class="task"
           draggable="true"
           v-for="task in column.items"
-          :key="task.id"        >
+          :key="task.id"
+        >
           <UiTaskTheme class="theme">{{ task.theme }}</UiTaskTheme>
-          <UiTaskComments class="comments" v-for="(comment, index) in task.comment" :key="index">{{comment.content}}</UiTaskComments>
-          <UiTaskName class="name">{{task.user.name}}</UiTaskName>
+          <UiTaskComments
+            class="comments"
+            v-for="(comment, index) in task.comment"
+            :key="index"
+            >{{ comment.content }}</UiTaskComments
+          >
+          <UiTaskName class="name">{{ task.user.name }}</UiTaskName>
+          <UiTaskDate class="date">{{
+            dayjs(task.$createdAt).format("DD MMMM YYYY")
+          }}</UiTaskDate>
         </UiTask>
       </div>
     </div>
@@ -48,6 +54,12 @@ const { data, refetch } = useBoardQuery();
   padding-inline: 20px;
   width: 100%;
 }
+.date {
+  font-size: 0.8rem;
+  color: #d4e1ec;
+  font-style: italic;
+  margin-top: auto;
+}
 
 .text {
   color: #f0f8ff;
@@ -61,7 +73,7 @@ const { data, refetch } = useBoardQuery();
   display: flex;
 }
 .task {
-  border: 1px solid #f0f8ff;
+  border: 1px solid #f0f8ff00;
   padding: 10px;
   border-radius: 6px;
   background: #382239a5;
@@ -71,7 +83,7 @@ const { data, refetch } = useBoardQuery();
   border-radius: 8px;
   gap: 0.8rem;
   margin: 0;
-  border: 1px solid #f9a0f955;
+
   margin-block: 1rem;
   flex: 1;
 }
@@ -83,32 +95,22 @@ const { data, refetch } = useBoardQuery();
   align-items: center;
   justify-content: space-between;
 }
-.theme,
-.comments,
-.name {
-  background: none;
-  resize: none;
-  outline: none;
-  overflow: hidden;
-  border: none;
-  border-color: #f9a0f955;
-  color: #edf6fe;
-  font-size: 1rem;
-  font-family: lato;
-  background: #cf85d313;
-  border-radius: 6px;
-}
 .theme {
-  font-size: 1.35rem;
-  background: #cf85d313;
-  border-radius: 6px;
-  font-style: italic;
+  font-size: 1.5rem;
+  color: #f0f8ff;
+  font-family: lato;
 }
 .comments {
-  font-size: 1.15rem;  
+  font-size: 1.15rem;
+  color: #d4e1ec;
+  font-size: 1rem;
+  padding: 0.2rem;
+  font-family: lato;
 }
 .name {
   font-style: italic;
+  color: #f0f8ff;
+  text-align: right;
 }
 .redact {
   cursor: pointer;

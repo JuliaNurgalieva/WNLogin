@@ -2,11 +2,14 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: false },
-  css: ["~/assets/global.css",],  
+  css: ["~/assets/global.css",],
   modules: [
-    "@nuxt/image",       
+    "@nuxt/image",
     "@nuxt/icon",
     "@pinia/nuxt",
+    ['@vee-validate/nuxt',
+      {autoImports: true,}
+    ]
   ], 
   pinia: {
     storesDirs: ['./store/**'],
