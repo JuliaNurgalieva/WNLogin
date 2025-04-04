@@ -1,118 +1,188 @@
 <script setup lang="ts">
-import { useMutation } from '@tanstack/vue-query'
-import { defineProps } from 'vue'
-import { COLLECTION_TASKS, DB_ID } from '~/app.constants'
-import type { ITask } from '~/types/task.types'
+import { useMutation } from "@tanstack/vue-query";
+import { defineProps } from "vue";
+import { COLLECTION_COMMENTS, COLLECTION_TASKS, COLLECTION_USERS, DB_ID } from "~/app.constants";
+import type { ITask } from "~/types/task.types";
 import { useForm } from "vee-validate";
-const isOpenForm = ref(false)
+import { UiInput } from "#components";
 
-interface ITaskFormState extends Pick<ITask, 'theme'> {
-	user: {		
-		name: string
-    }
-    comment: {
-        content: string
-    }
-	status: string
+const isOpenForm = ref(false);
+
+interface ITaskFormState extends Pick<ITask, "theme"> {
+  user: {
+    name: string;
+  };
+  comment: {
+    content: string;
+  };
+  status: string;
 }
 
 const props = defineProps({
-	status: {
-		type: String,
-		default: '',
-	},
-	refetch: {
-		type: Function,
-	},
-})
-
+  status: {
+    type: String,
+    default: "",
+  },
+  refetch: {
+    type: Function,
+  },
+});
 const { handleSubmit, defineField, handleReset } = useForm<ITaskFormState>({
-	initialValues: {
-		status: props.status,
-	},
-})
+  initialValues: {
+    status: props.status,
+    theme: "",
+    user: {
+      name: "",
+    },
+    comment: {
+      content: "",
+    },
+  },
+});
+const [theme, themeAttrs] = defineField("theme");
+const [name, nameAttrs] = defineField("user.name");
+const [comment, commentAttrs] = defineField("comment.content");
 
-
-const [theme, themeAttrs] = defineField('theme')
-const [name, nameAttrs] = defineField('user.name')
-const [comment, commentAttrs] = defineField('comment.content')
-
+/*const { mutate, isPending } = useMutation({
+  mutationKey: ["create a new task"],
+  mutationFn: (data: ITaskFormState) =>
+    DB.createDocument(DB_ID, COLLECTION_TASKS, ID.unique(), data),
+  onSuccess() {
+    props.refetch && props.refetch();
+    handleReset();
+  },
+});
+*/
 const { mutate, isPending } = useMutation({
-	mutationKey: ['create a new deal'],
-	mutationFn: (data: ITaskFormState) =>
-		DB.createDocument(DB_ID, COLLECTION_TASKS, ID.unique(), data),
-	onSuccess() {
-		props.refetch && props.refetch()
-		handleReset()
-	},
+  mutationKey: ['create a new deal'],
+  mutationFn: async (values: ITaskFormState) => {
+    
+    const user = await DB.createDocument(DB_ID, COLLECTION_USERS, ID.unique(), {
+      name: values.user.name,
+    })    
+    const comment = await DB.createDocument(DB_ID, COLLECTION_COMMENTS, ID.unique(), {
+      content: values.comment.content,
+    })   
+    return DB.createDocument(DB_ID, COLLECTION_TASKS, ID.unique(), {
+      theme: values.theme,
+      status: values.status,
+      user: user.$id,
+      comment: [comment.$id],
+    })
+  },
+  onSuccess() {
+    props.refetch && props.refetch()
+    handleReset()
+  },
+  
+   
 })
-
-const onSubmit = handleSubmit(values => {
-	mutate(values)
-})
+const onSubmit = handleSubmit((values) => {
+  mutate(values);
+});
 </script>
 
 <template>
-	
-	<form v-if="isOpenForm" @submit="onSubmit" class="form">
-		<UiInput
-			placeholder="Наименование"
-			v-model="theme"
-			v-bind="themeAttrs"
-			type="text"
-			class="input"
-		/>
-		<UiInput
-			placeholder="Сумма"
-			v-model="name"
-			v-bind="nameAttrs"
-			type="text"
-			class="input"
-		/>
-		<UiInput
-			placeholder="Комментарий"
-			v-model="comment"
-			v-bind="commentAttrs"
-			type="text"
-			class="input"
-		/>
-	
-
-		<button class="btn" :disabled="isPending">
-			{{ isPending ? 'Загрузка...' : 'Добавить' }}
-		</button>
-	</form>
+  <div class="create_btn">
+    <button class="btn" @click="isOpenForm = !isOpenForm">
+      <Icon
+        v-if="isOpenForm"
+        name="radix-icons:arrow-up"
+        class="fade-in-100 fade-out-0"
+        size="20"
+      />
+      <Icon
+        v-else
+        name="radix-icons:plus"
+        class="fade-in-100 fade-out-0"
+        size="20"
+      />
+    </button>
+  </div>
+  <form v-if="isOpenForm" @submit="onSubmit" class="form">
+    <UiInput
+      placeholder="Theme"
+      v-model="theme"
+      v-bind="themeAttrs"
+      type="text"
+      class="input"
+    />
+    <UiInput
+      placeholder="Name"
+      v-model="name"
+      v-bind="nameAttrs"
+      type="text"
+      class="input"
+    />
+    <UiInput
+      placeholder="Comments"
+      v-model="comment"
+      v-bind="commentAttrs"
+      type="text"
+      class="input"
+    />
+    <button class="btn" :disabled="isPending">
+      {{ isPending ? "loading..." : "create" }}
+    </button>
+  </form>
 </template>
 
 <style scoped>
-.input {
-	@apply border-[#161c26] mb-2 placeholder:text-[#748092] focus:border-border transition-colors;
+.create_btn {
+  display: flex;
+  justify-content: center;
 }
-
 .btn {
-	@apply text-xs border py-1 px-2 rounded border-[#161c26] hover:border-[#482c65] transition-colors text-[#aebed5] hover:text-white;
+  margin: 0px;
+  padding: 0px;
+  background: none;
+  border: none;
+  color: rgba(240, 248, 255, 0.295);
+  align: right;
 }
-
+.btn:hover {
+  border-color: #f9a0f9c4;
+  color: #f9a0f9c4;
+}
+.input {
+  border: 1px solid #f9a0f955;
+  border-radius: 5px;
+  padding: 0.5rem;
+  background: #382239a5;
+  color: #f0f8ff;
+  font-size: 1rem;
+  font-family: lato;
+  width: 100%;
+  margin-bottom: 0.2rem;
+  outline: none;
+}
+input::placeholder {
+  color: #f9a0f95d;
+}
+.input:focus {
+  outline: none;
+  border-color: #ff66fc7b;
+}
 .form {
-	@apply mb-3 block;
-	animation: show 0.3s ease-in-out;
+  animation: show 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
 }
-
 @keyframes show {
-	from {
-		@apply border-[#a252c83d];
-		transform: translateY(-35px);
-		opacity: 0.4;
-	}
+  from {
+    border-color: #a657ca3d;
+    transform: translateY(-35px);
+    opacity: 0.4;
+  }
 
-	90% {
-		@apply border-[#a252c83d];
-	}
+  90% {
+    border-color: #a252c83d;
+  }
 
-	to {
-		@apply border-transparent;
-		transform: translateY(0);
-		opacity: 1;
-    }
+  to {
+    border-color: transparent;
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 </style>

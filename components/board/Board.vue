@@ -16,10 +16,11 @@ const { data, refetch } = useBoardQuery();</script>
   <div class="grid">
     <div v-for="column in data" :key="column.id">
       <div class="title">
-        <span class="text">{{ column.name }}</span>       
-      </div>
-      <div class="board">
-        <DrawerTask :refetch="refetch" :status="column.id" />
+        <span class="text">{{ column.name }}          
+        </span> 
+        <BoardCreateTask :refetch="refetch" :status="column.id" />      
+      </div>      
+      <div class="board">        
         <UiTask
           class="task"
           draggable="true"
@@ -123,4 +124,6 @@ const { data, refetch } = useBoardQuery();</script>
 .active-icon {
   color: #f9a0f9;
 }
+
+  
 </style>
