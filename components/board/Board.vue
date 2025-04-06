@@ -3,29 +3,60 @@ import { ref } from "vue";
 import { useBoardQuery } from "@/components/board/useBoardQuery";
 import { useMutation } from "@tanstack/vue-query";
 import { type IColumn, type ITask } from "~/components/board/board.types";
-import UiTaskTheme from "~/components/ui/task/TaskTheme.vue";
-import UiTask from "~/components/ui/task/TaskTheme.vue";
-import UiTaskName from "~/components/ui/task/TaskTheme.vue";
-import UiTaskComments from "~/components/ui/task/TaskTheme.vue";
+import { COLLECTION_TASKS, DB_ID } from "~/app.constants";
 import dayjs from "dayjs";
 import { BoardCreateTask } from "#components";
+import type { EnumStatus } from "~/types/task.types";
 const dragTask = ref<ITask | null>(null);
 const sourceColumn = ref<IColumn | null>(null);
-const { data, refetch } = useBoardQuery();</script>
+const { data, refetch } = useBoardQuery();
+type TypeMutationVariables = {
+  docID: string
+  status: EnumStatus
+ }
+const {mutate} = useMutation({
+  mutationKey: ["move task"],
+  mutationFn: ({ docID, status }: TypeMutationVariables) => 
+    DB.updateDocument(DB_ID, COLLECTION_TASKS, docID, { status }),
+      onSuccess: () => {
+        refetch()      
+  },
+})
+function handleDragStart(task: ITask, column: IColumn) {
+  dragTask.value = task
+  sourceColumn.value = column
+ }
+function handleDragOver(event: DragEvent) {
+  event.preventDefault()
+}
+function handleDrop(targetColumn: IColumn) {
+  if (dragTask.value && sourceColumn.value) {
+    mutate({
+      docID: dragTask.value.$id,
+      status: targetColumn.id as EnumStatus,
+    })
+  }
+}
+const isDrawerOpen = ref(false);
+</script>
 <template>
   <div class="grid">
-    <div v-for="column in data" :key="column.id">
+    <div v-for="column in data" :key="column.id"    >
       <div class="title">
         <span class="text">{{ column.name }}          
         </span> 
         <BoardCreateTask :refetch="refetch" :status="column.id" />      
       </div>      
-      <div class="board">        
+      <div class="board"
+       @dragover="handleDragOver"
+       @drop="() => handleDrop(column)">        
         <UiTask
           class="task"
           draggable="true"
           v-for="task in column.items"
-          :key="task.id"
+          :key="task.$id"
+          @dragstart="() => handleDragStart(task, column)"
+          @click="() => (isDrawerOpen = true)"
         >
           <UiTaskTheme class="theme">{{ task.theme }}</UiTaskTheme>
           <UiTaskComments
@@ -42,6 +73,7 @@ const { data, refetch } = useBoardQuery();</script>
       </div>
     </div>
   </div>
+  <DrawerTask v-model:isVisible="isDrawerOpen" />
 </template>
 
 <style scoped>
@@ -84,7 +116,6 @@ const { data, refetch } = useBoardQuery();</script>
   border-radius: 8px;
   gap: 0.8rem;
   margin: 0;
-
   margin-block: 1rem;
   flex: 1;
 }
@@ -123,6 +154,11 @@ const { data, refetch } = useBoardQuery();</script>
 }
 .active-icon {
   color: #f9a0f9;
+}
+
+.board {
+  min-height: 100px;
+  display: block;
 }
 
   

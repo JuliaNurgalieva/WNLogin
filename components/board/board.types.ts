@@ -1,7 +1,7 @@
 import type { EnumStatus } from '@/types/task.types'
 
 export interface ITask {
-	id: string
+	$id: string
 	theme: string
 	$createdAt: string
 	user: {

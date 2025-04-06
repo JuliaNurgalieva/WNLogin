@@ -137,7 +137,7 @@ const onSubmit = handleSubmit((values) => {
   padding: 0px;
   background: none;
   border: none;
-  color: rgba(240, 248, 255, 0.295);
+  color: #ffffff2f;
   align: right;
 }
 .btn:hover {

@@ -95,7 +95,7 @@ onMounted(async () => {
             type="text"
             ref="textareaRef"
           ></input>
-          <button class="btn" :disabled="isPending">{{ isPending ? 'loading' : 'create' }}</button>
+          <Icon name="heroicons-solid:trash" class="delete" @click="closeDrawer" />
         </form>
       <Icon name="heroicons-solid:x" class="close-icon" @click="closeDrawer" />
     </aside>
@@ -103,6 +103,15 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.delete {
+  margin-left: auto;
+  margin-block: 1rem;
+  color: #f0f8ff;
+  cursor: pointer;
+}
+.delete:hover {
+  color: #f9a0f9c4;
+}
 
 button {
   border: 1px solid transparent;

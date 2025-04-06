@@ -2,12 +2,11 @@ import { useQuery } from "@tanstack/vue-query";
 import { COLLECTION_TASKS, DB_ID,} from "~/app.constants";
 import { BOARD_DATA } from "./board.data";
 import type { ITask } from "./board.types";
-import Task from "../ui/task/Task.vue";
-
 export function useBoardQuery() {
     return useQuery({
         queryKey: ["tasks"],
-        queryFn: async () => DB.listDocuments (DB_ID, COLLECTION_TASKS), 
+        queryFn: async () => DB.listDocuments(DB_ID, COLLECTION_TASKS), 
+        staleTime: 0,
         select(data) {
             const newBoard = [...BOARD_DATA].map(column => ({...column,
                 items: [] as ITask[]
@@ -17,7 +16,7 @@ export function useBoardQuery() {
                 const column = newBoard.find(col => col.id === task.status)
                 if(column) {
                     column.items.push({
-                        id: task.id,
+                        $id: task.$id,
                         theme: task.theme,
                         $createdAt: task.$createdAt,
                         comment: task.comment,                        
