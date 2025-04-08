@@ -7,6 +7,8 @@ import { COLLECTION_TASKS, DB_ID } from "~/app.constants";
 import dayjs from "dayjs";
 import { BoardCreateTask } from "#components";
 import type { EnumStatus } from "~/types/task.types";
+import { useTaskDrawerStore } from '~/stores/task-drawer-store'
+const store = useTaskDrawerStore()
 const dragTask = ref<ITask | null>(null);
 const sourceColumn = ref<IColumn | null>(null);
 const { data, refetch } = useBoardQuery();
@@ -56,7 +58,7 @@ const isDrawerOpen = ref(false);
           v-for="task in column.items"
           :key="task.$id"
           @dragstart="() => handleDragStart(task, column)"
-          @click="() => (isDrawerOpen = true)"
+          @click= "() => { store.set(task); isDrawerOpen = true }"
         >
           <UiTaskTheme class="theme">{{ task.theme }}</UiTaskTheme>
           <UiTaskComments

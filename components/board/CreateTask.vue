@@ -43,16 +43,6 @@ const [theme, themeAttrs] = defineField("theme");
 const [name, nameAttrs] = defineField("user.name");
 const [comment, commentAttrs] = defineField("comment.content");
 
-/*const { mutate, isPending } = useMutation({
-  mutationKey: ["create a new task"],
-  mutationFn: (data: ITaskFormState) =>
-    DB.createDocument(DB_ID, COLLECTION_TASKS, ID.unique(), data),
-  onSuccess() {
-    props.refetch && props.refetch();
-    handleReset();
-  },
-});
-*/
 const { mutate, isPending } = useMutation({
   mutationKey: ['create a new deal'],
   mutationFn: async (values: ITaskFormState) => {
@@ -155,6 +145,7 @@ const onSubmit = handleSubmit((values) => {
   width: 100%;
   margin-bottom: 0.2rem;
   outline: none;
+  
 }
 input::placeholder {
   color: #f9a0f95d;
@@ -166,7 +157,7 @@ input::placeholder {
 .form {
   animation: show 0.3s ease-in-out;
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  
 }
 @keyframes show {
   from {

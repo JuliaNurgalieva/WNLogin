@@ -10,7 +10,7 @@ export interface ITask {
 	comment: {
 		content: string;
 	}[]
-	status: string
+	status: EnumStatus
 }
 
 export interface IColumn {

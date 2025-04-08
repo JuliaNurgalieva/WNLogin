@@ -1,12 +1,13 @@
 export interface IBaseField {
-	$createdAt: string
-	$id: string
+	$createdAt?: string
+	$id?: string
 }
 export interface IUser extends IBaseField {
 	name: string	
 }
 export interface IComment extends IBaseField {
 	content: string
+	
 }
 export enum EnumStatus {
 	'todo' = 'todo',
@@ -17,7 +18,7 @@ export enum EnumStatus {
 
 export interface ITask extends IBaseField {
 	comment: IComment[]
-	user: string
+	user: IUser
 	theme: string	
 	status: EnumStatus
 }
