@@ -29,5 +29,6 @@ const props = defineProps({
   font-style: Italic;   
   color: #f0f8ff;      
   margin: 0;   
+  margin-left: 4px;
 }
 </style>

@@ -77,7 +77,7 @@ const isDrawerOpen = ref(false);
       </div>
     </div>
   </div>
-  <DrawerTask v-model:isVisible="isDrawerOpen" />
+  <DrawerTask v-model:isVisible="isDrawerOpen" :refetch="refetch"/>
 </template>
 
 <style scoped>

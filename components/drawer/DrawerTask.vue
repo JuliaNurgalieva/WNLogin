@@ -1,57 +1,63 @@
 <script lang="ts" setup>
 import { defineProps, defineEmits } from "vue";
-import dayjs from 'dayjs'
-import { useTaskDrawerStore } from '~/stores/task-drawer-store'
+import dayjs from "dayjs";
+import { useTaskDrawerStore } from "~/stores/task-drawer-store";
 import { DrawerComments } from "#components";
-
-const store = useTaskDrawerStore()
-const props = defineProps({
-  isVisible: {
-    type: Boolean,
-    required: true,
-  },
-});
+import { useDeleteTask } from "./useDeleteTask";
+const props = defineProps <{
+  isVisible: Boolean,  
+  refetch: () => void,
+}>();
+const { deleteTask } = useDeleteTask({ refetch : props.refetch });
+const handleDeleteTask = () => {
+  if (!store.task?.$id) return;
+  deleteTask(store.task.$id);
+  store.task = null;
+  emit("update:isVisible", false);
+};
+const store = useTaskDrawerStore();
 const isLocalOpen = computed({
   get: () => store.isOpen,
-  set: value => {
-    store.isOpen = value
+  set: (value) => {
+    store.isOpen = value;
   },
-})
+});
 const emit = defineEmits(["update:isVisible"]);
 const closeDrawer = () => {
-  store.task = null
-  emit("update:isVisible", false); 
-}
+  store.task = null;
+  emit("update:isVisible", false);
+};
 </script>
 
 <template>
-  <transition name="slide" v-model="isLocalOpen">    
-    <aside class="drawer" v-if="isVisible " ref="drawerRef">
+  <transition name="slide" v-model="isLocalOpen">
+    <aside class="drawer" v-if="isVisible" ref="drawerRef">
       <Icon name="heroicons-solid:x" class="close-icon" @click="closeDrawer" />
       <div class="task-content">
-      <p>About task</p>
-       <div class="drawer-task">
-        <DrawerLabel labelText="Theme:">{{ store.task?.theme }}</DrawerLabel>
-        <DrawerLabel labelText="Name:">{{ store.task?.user.name}}</DrawerLabel>        
-        <DrawerLabel labelText="Date:">
-          {{ dayjs(store.task?.$createdAt).format('DD MMMM YYYY') }}
-        </DrawerLabel> 
-        <Icon name="heroicons-solid:trash" class="delete" @click="" />      
-       </div> 
-      </div> 
+        <p>About task</p>
+        <div class="drawer-task">
+          <DrawerLabel labelText="Theme:">{{ store.task?.theme }}</DrawerLabel>
+          <DrawerLabel labelText="Name:">{{
+            store.task?.user.name
+          }}</DrawerLabel>
+          <DrawerLabel labelText="Date:">
+            {{ dayjs(store.task?.$createdAt).format("DD MMMM YYYY") }}
+          </DrawerLabel>
+          <Icon name="heroicons-solid:trash" class="delete" @click="handleDeleteTask" title="Delete task" />
+        </div>
+      </div>
       <div class="scroll">
-      <DrawerComments />  
-    </div>       
-    </aside>     
+        <DrawerComments />
+      </div>
+    </aside>
   </transition>
-  
 </template>
 
 <style scoped>
-.delete {   
+.delete {
   cursor: pointer;
-  transition: color 0.2s; 
-  margin-left: auto; 
+  transition: color 0.2s;
+  margin-left: auto;
   color: #f0f8ff48;
 }
 .delete:hover {
@@ -65,8 +71,8 @@ const closeDrawer = () => {
   width: 8px;
   background: transparent;
 }
-.drawer { 
-  padding: 1rem;  
+.drawer {
+  padding: 1rem;
   position: fixed;
   top: 0;
   right: 0;
@@ -74,22 +80,21 @@ const closeDrawer = () => {
   height: 120vh;
   background: #48324d;
   box-shadow: -2px 0 10px #00000033;
-  z-index: 9999;  
-  
+  z-index: 9999;
 }
 .drawer.open {
   transform: translateX(0);
 }
-.task-content{
+.task-content {
   background: #38223981;
   border-radius: 4px;
   padding: 1rem;
 }
-p {  
-  color: #f0f8ff;    
+p {
+  color: #f0f8ff;
   font-family: Lato-Italic;
   font-size: 1.5rem;
-  margin:0;
+  margin: 0;
 }
 .slide-enter-from,
 .slide-leave-to {
@@ -105,11 +110,11 @@ p {
 .slide-leave-active {
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
-.close-icon {   
+.close-icon {
   cursor: pointer;
   color: #f0f8ff;
   transition: color 0.2s;
-  margin-bottom: 0.5rem; 
+  margin-bottom: 0.5rem;
 }
 .close-icon:hover {
   color: #f9a0f9c4;
@@ -119,9 +124,8 @@ p {
   display: flex;
   flex-direction: column;
   flex: 1;
-  overflow-y: auto;  
+  overflow-y: auto;
   color: #ffffff;
   font-family: Lato-Italic;
 }
-
 </style>
