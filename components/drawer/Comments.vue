@@ -47,8 +47,8 @@ function submitEdit(id: string) {
 				<p>{{ comment.content }}</p>
 			</div>
         <div class="delete-redact">
-            <Icon name="heroicons-solid:pencil" class="redact" @click="startEdit(comment)" />
-            <Icon name="heroicons-solid:trash" class="delete" @click="() => comment.$id && deleteComment(comment.$id)" />            
+            <Icon name="heroicons-solid:pencil" class="redact" @click="startEdit(comment)" title="Redact comment" />
+            <Icon name="heroicons-solid:trash" class="delete" @click="() => comment.$id && deleteComment(comment.$id)" title="Delete comment"/>            
         </div>
 		</div>
 	</div>

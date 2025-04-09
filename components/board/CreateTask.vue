@@ -78,13 +78,13 @@ const onSubmit = handleSubmit((values) => {
       <Icon
         v-if="isOpenForm"
         name="radix-icons:arrow-up"
-        class="fade-in-100 fade-out-0"
+        class=""
         size="20"
       />
       <Icon
         v-else
         name="radix-icons:plus"
-        class="fade-in-100 fade-out-0"
+        title="Create new task"
         size="20"
       />
     </button>
@@ -159,21 +159,5 @@ input::placeholder {
   display: flex;
   flex-direction: column;  
 }
-@keyframes show {
-  from {
-    border-color: #a657ca3d;
-    transform: translateY(-35px);
-    opacity: 0.4;
-  }
 
-  90% {
-    border-color: #a252c83d;
-  }
-
-  to {
-    border-color: transparent;
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
 </style>
