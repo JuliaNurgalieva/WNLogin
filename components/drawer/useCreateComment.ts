@@ -20,7 +20,6 @@ export function useCreateComment({ refetch }: { refetch: () => void }) {
 			commentRef.value = ''
 		},		
 	})
-	console.log('ID задачи', store.task?.$id)
 
 	const writeComment = () => {
 		if (!commentRef.value) return

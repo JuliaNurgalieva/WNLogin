@@ -1,19 +1,36 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs'
-import type { ITask } from '~/types/task.types'
+import type { IComment, ITask } from '~/types/task.types'
 import { useComments } from './useComments'
 import { useCreateComment } from './useCreateComment'
 import { useDeleteComment } from './useDeleteComment'
-const { data, refetch, isLoading } = useComments()
+import { useUpdateComment } from './useUpdateComment'
+
+const { data, refetch } = useComments()
 const { commentRef, writeComment } = useCreateComment({ refetch })
 const { deleteComment } = useDeleteComment({ refetch })
+const { updateComment } = useUpdateComment({ refetch })
 const task = data as unknown as ITask
+const editCommentId = ref<string | null>(null)
+const editContent = ref('')
+
+function startEdit(comment: IComment) {
+  if(!comment.$id) return
+  editCommentId.value = comment.$id
+  editContent.value = comment.content
+}
+
+function submitEdit(id: string) {
+  if (!editContent.value.trim()) return
+  updateComment({ id, content: editContent.value })
+  editCommentId.value = null
+  editContent.value = ''
+}
 </script>
 
-<template>
+<template>	
 	
-	<UiSkeleton v-if="isLoading" />
-	<div v-else-if="task">
+	<div class="task">
 		<div
 			v-for="comment in task?.comment"
 			:key="comment.$id"		>
@@ -22,10 +39,15 @@ const task = data as unknown as ITask
 				<div class="date">
 					{{ dayjs(comment.$createdAt).format('DD MMMM YYYY') }}
 				</div>
+        <UiInput
+      v-if="editCommentId === comment.$id"
+      v-model="editContent"
+      @keyup.enter="submitEdit(comment.$id)"      
+    />
 				<p>{{ comment.content }}</p>
 			</div>
         <div class="delete-redact">
-            <Icon name="heroicons-solid:pencil" class="redact" @click="" />
+            <Icon name="heroicons-solid:pencil" class="redact" @click="startEdit(comment)" />
             <Icon name="heroicons-solid:trash" class="delete" @click="() => comment.$id && deleteComment(comment.$id)" />            
         </div>
 		</div>
