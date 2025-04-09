@@ -20,7 +20,7 @@ const isLocalOpen = computed({
 const emit = defineEmits(["update:isVisible"]);
 const closeDrawer = () => {
   store.task = null
-  emit("update:isVisible", false);
+  emit("update:isVisible", false); 
 }
 </script>
 

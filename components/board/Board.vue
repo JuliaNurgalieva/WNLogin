@@ -61,12 +61,14 @@ const isDrawerOpen = ref(false);
           @click= "() => { store.set(task); isDrawerOpen = true }"
         >
           <UiTaskTheme class="theme">{{ task.theme }}</UiTaskTheme>
-          <UiTaskComments
-            class="comments"
-            v-for="(comment, index) in task.comment"
-            :key="index"
-            >{{ comment.content }}</UiTaskComments
+          <div class="field-comments">
+            <UiTaskComments
+              class="comments"
+              v-for="(comment, index) in task.comment"
+              :key="index"
+              >{{ comment.content }}</UiTaskComments
           >
+          </div>
           <UiTaskName class="name">{{ task.user.name }}</UiTaskName>
           <UiTaskDate class="date">{{
             dayjs(task.$createdAt).format("DD MMMM YYYY")
@@ -79,6 +81,14 @@ const isDrawerOpen = ref(false);
 </template>
 
 <style scoped>
+.field-comments {
+  max-height: 70px;
+  overflow-y: auto;
+}
+.field-comments::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -93,7 +103,7 @@ const isDrawerOpen = ref(false);
   font-size: 0.8rem;
   color: #d4e1ec;
   font-style: italic;
-  margin-top: auto;
+  
 }
 
 .text {
@@ -120,6 +130,7 @@ const isDrawerOpen = ref(false);
   margin: 0;
   margin-block: 1rem;
   flex: 1;
+  min-height: 191px;
 }
 .task:hover {
   border: 1px solid #f9a0f9c4;
@@ -130,7 +141,7 @@ const isDrawerOpen = ref(false);
   justify-content: space-between;
 }
 .theme {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: #f0f8ff;
   font-family: lato;
 }
@@ -145,6 +156,7 @@ const isDrawerOpen = ref(false);
   font-style: italic;
   color: #f0f8ff;
   text-align: right;
+  margin-top: auto;
 }
 .redact {
   cursor: pointer;

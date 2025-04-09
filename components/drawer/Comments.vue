@@ -3,10 +3,10 @@ import dayjs from 'dayjs'
 import type { ITask } from '~/types/task.types'
 import { useComments } from './useComments'
 import { useCreateComment } from './useCreateComment'
-
+import { useDeleteComment } from './useDeleteComment'
 const { data, refetch, isLoading } = useComments()
 const { commentRef, writeComment } = useCreateComment({ refetch })
-
+const { deleteComment } = useDeleteComment({ refetch })
 const task = data as unknown as ITask
 </script>
 
@@ -26,7 +26,7 @@ const task = data as unknown as ITask
 			</div>
         <div class="delete-redact">
             <Icon name="heroicons-solid:pencil" class="redact" @click="" />
-            <Icon name="heroicons-solid:trash" class="delete" @click="" />            
+            <Icon name="heroicons-solid:trash" class="delete" @click="() => comment.$id && deleteComment(comment.$id)" />            
         </div>
 		</div>
 	</div>
